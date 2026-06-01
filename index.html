@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sonam Kapoor</title>
+
+<style>
+:root{
+--bg:#0f1115;
+--card:#171a21;
+--text:#ffffff;
+--sub:#b5b5b5;
+--accent:#00b7ff;
+--border:#262a33;
+}
+
+.light{
+--bg:#f4f4f4;
+--card:#ffffff;
+--text:#111111;
+--sub:#666666;
+--accent:#0095ff;
+--border:#dddddd;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:var(--bg);
+color:var(--text);
+transition:.4s;
+}
+
+header{
+position:sticky;
+top:0;
+background:rgba(0,0,0,.4);
+backdrop-filter:blur(15px);
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+z-index:999;
+}
+
+.logo{
+font-size:22px;
+font-weight:bold;
+}
+
+.theme-btn{
+border:none;
+background:var(--accent);
+color:white;
+padding:10px 18px;
+border-radius:30px;
+cursor:pointer;
+}
+
+.profile{
+max-width:1200px;
+margin:auto;
+padding:40px 20px;
+display:flex;
+flex-wrap:wrap;
+gap:40px;
+align-items:center;
+}
+
+.avatar{
+width:220px;
+height:220px;
+border-radius:50%;
+overflow:hidden;
+border:5px solid var(--accent);
+box-shadow:0 0 30px rgba(0,183,255,.4);
+}
+
+.avatar img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.info{
+flex:1;
+}
+
+.username{
+font-size:40px;
+font-weight:700;
+}
+
+.verify{
+color:#00aaff;
+}
+
+.bio{
+margin-top:15px;
+line-height:1.8;
+color:var(--sub);
+}
+
+.stats{
+display:flex;
+gap:40px;
+margin-top:25px;
+flex-wrap:wrap;
+}
+
+.stat{
+background:var(--card);
+padding:20px;
+border-radius:15px;
+min-width:140px;
+text-align:center;
+border:1px solid var(--border);
+}
+
+.stat h2{
+color:var(--accent);
+}
+
+.gallery{
+max-width:1300px;
+margin:auto;
+padding:20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:15px;
+}
+
+.post{
+overflow:hidden;
+border-radius:20px;
+cursor:pointer;
+position:relative;
+background:var(--card);
+}
+
+.post img{
+width:100%;
+height:380px;
+object-fit:cover;
+transition:.4s;
+}
+
+.post:hover img{
+transform:scale(1.08);
+}
+
+.post::after{
+content:"❤ View";
+position:absolute;
+inset:0;
+background:rgba(0,0,0,.45);
+display:flex;
+justify-content:center;
+align-items:center;
+opacity:0;
+transition:.3s;
+font-size:22px;
+font-weight:bold;
+}
+
+.post:hover::after{
+opacity:1;
+}
+
+.modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.95);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+.modal img{
+max-width:95%;
+max-height:95%;
+border-radius:20px;
+}
+
+.close{
+position:absolute;
+top:20px;
+right:30px;
+font-size:40px;
+color:white;
+cursor:pointer;
+}
+
+footer{
+text-align:center;
+padding:40px;
+color:var(--sub);
+}
+
+@media(max-width:768px){
+.profile{
+text-align:center;
+justify-content:center;
+}
+
+.stats{
+justify-content:center;
+}
+
+.username{
+font-size:30px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">Sonam Kapoor ✔</div>
+<button class="theme-btn" onclick="toggleTheme()">Theme</button>
+</header>
+
+<section class="profile">
+
+<div class="avatar">
+<img src="profile.jpg">
+</div>
+
+<div class="info">
+
+<div class="username">
+Sonam Kapoor
+<span class="verify">✔</span>
+</div>
+
+<div class="bio">
+Actor • Fashion Icon • Entrepreneur ✨<br>
+Creating beautiful moments and inspiring millions around the world.
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<h2 id="posts">0</h2>
+<p>Posts</p>
+</div>
+
+<div class="stat">
+<h2 id="followers">0</h2>
+<p>Followers</p>
+</div>
+
+<div class="stat">
+<h2 id="following">0</h2>
+<p>Following</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="gallery">
+
+<div class="post">
+<img src="1780350459715.jpg">
+</div>
+
+<div class="post">
+<img src="1780350447439.jpg">
+</div>
+
+<div class="post">
+<img src="1780350445663.jpg">
+</div>
+
+<div class="post">
+<img src="1780350443701.jpg">
+</div>
+
+<div class="post">
+<img src="1780350441847.jpg">
+</div>
+
+</section>
+
+<div class="modal" id="modal">
+<span class="close" onclick="closeModal()">&times;</span>
+<img id="modalImg">
+</div>
+
+<footer>
+© 2026 Professional Profile Website
+</footer>
+
+<script>
+
+function animateValue(id,start,end,duration){
+let obj=document.getElementById(id);
+let range=end-start;
+let current=start;
+let increment=end>start?1:-1;
+let stepTime=Math.abs(Math.floor(duration/range));
+
+let timer=setInterval(()=>{
+current+=increment;
+obj.textContent=current.toLocaleString();
+if(current==end){
+clearInterval(timer);
+}
+},stepTime);
+}
+
+animateValue("posts",0,5,1000);
+animateValue("followers",0,38000000,2000);
+animateValue("following",0,210,1000);
+
+function toggleTheme(){
+document.body.classList.toggle("light");
+}
+
+const modal=document.getElementById("modal");
+const modalImg=document.getElementById("modalImg");
+
+document.querySelectorAll(".post img").forEach(img=>{
+img.onclick=()=>{
+modal.style.display="flex";
+modalImg.src=img.src;
+}
+});
+
+function closeModal(){
+modal.style.display="none";
+}
+
+modal.onclick=function(e){
+if(e.target===modal){
+modal.style.display="none";
+}
+};
+
+</script>
+
+</body>
+</html>
